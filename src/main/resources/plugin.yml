@@ -1,0 +1,21 @@
+name: @name@
+version: @version@
+main: click.seichi.eategg.EatEgg
+depend:
+  - WorldGuard
+commands:
+  eategg:
+    usage: /eategg <toggle|reload>
+    description: This is a command to execute something about EatEgg.
+perimissions:
+  eategg.*:
+    default: op
+    children:
+      - eategg.toggle
+      - eategg.reload
+  eategg.toggle:
+    description: This permission allows a player to toggle whether throw an egg.
+    default: op
+  eategg.reload:
+    description: This permission allows a player to reload config.
+    default: op
