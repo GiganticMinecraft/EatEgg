@@ -9,13 +9,13 @@ commands:
     description: This is a command to execute something about EatEgg.
 perimissions:
   eategg.*:
-    default: op
+    default: false
     children:
       - eategg.toggle
       - eategg.reload
   eategg.toggle:
     description: This permission allows a player to toggle whether throw an egg.
-    default: op
+    default: false
   eategg.reload:
     description: This permission allows a player to reload config.
-    default: op
+    default: false
