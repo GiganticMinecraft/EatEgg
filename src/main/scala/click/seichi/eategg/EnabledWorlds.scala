@@ -20,4 +20,6 @@ object EnabledWorlds {
   }
 
   def get(): Set[String] = worlds.toSet
+
+  def contains(worldName: String): Boolean = get().contains(worldName.toLowerCase)
 }
