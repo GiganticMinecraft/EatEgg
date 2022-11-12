@@ -37,7 +37,7 @@ jobs:
         run: sbt assembly
 
       - name: Clean build artifact for caching target folder
-        run: rm -r target/build
+        run: rm -r target/scala-2.13/*.jar
   cd:
     name: Release
     runs-on: ubuntu-latest
@@ -72,8 +72,8 @@ jobs:
         with:
           body: ${{ steps.changelog.outputs.clean_changelog }}
           tag_name: ${{ steps.changelog.outputs.tag }}
-          files: ./target/build/EatEgg-*.jar
+          files: ./target/scala-2.13/EatEgg-*.jar
 
       - name: Clean build artifact for caching target folder
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        run: rm -r target/build
+        run: rm -r target/scala-2.13/*.jar
