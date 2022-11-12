@@ -1,3 +1,12 @@
+## [0.1.1](https://github.com/Lucky3028/EatEgg/compare/v0.1.0...v0.1.1) (2022-11-12)
+
+
+### Bug Fixes
+
+* load config onEnable ([053e144](https://github.com/Lucky3028/EatEgg/commit/053e1448fd18f08acb513b1fea39d5108a3d2e69))
+
+
+
 # [0.1.0](https://github.com/Lucky3028/EatEgg/compare/v0.0.0...v0.1.0) (2022-11-12)
 
 
