@@ -22,8 +22,7 @@ package object commands {
     override val commandName: String,
     branches: Set[Executor],
     whenNoBranch: Option[Executor] = None
-  )(implicit plugin: JavaPlugin)
-      extends Executor {
+  ) extends Executor {
     override def execute(context: CommandContext): Unit = {
       branches
         .find { executor => context.args.headOption.contains(executor.commandName.toLowerCase) }

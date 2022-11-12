@@ -3,9 +3,8 @@ package click.seichi.eategg.commands
 import click.seichi.eategg.IsUuidIgnored
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import org.bukkit.plugin.java.JavaPlugin
 
-case class Toggle()(implicit plugin: JavaPlugin) extends Executor {
+case class Toggle() extends Executor {
   override val commandName: String = "toggle"
 
   override def execute(context: CommandContext): Unit = {
