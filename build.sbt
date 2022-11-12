@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
   "org.spigotmc" % "spigot-api" % "1.12.2-R0.1-SNAPSHOT",
   "com.sk89q.worldguard" % "worldguard-legacy" % "6.2",
   // WorldGuardがWordEditを要求するので
-  "com.sk89q.worldedit" % "worldedit-bukkit" % "6.1"
+  "com.sk89q.worldedit" % "worldedit-bukkit" % "7.0.1"
 ).map(_ % "provided")
 
 excludeDependencies ++= Seq(
