@@ -12,6 +12,7 @@ class EatEgg extends JavaPlugin {
     implicit val instance: EatEgg = this
 
     saveDefaultConfig()
+    EnabledWorlds.load()
 
     MainCommand().register(this)
     Set(CancelEggHatched, ResetFlags).foreach(listener =>
