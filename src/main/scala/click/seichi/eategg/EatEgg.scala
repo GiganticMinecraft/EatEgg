@@ -5,8 +5,6 @@ import click.seichi.eategg.listeners.{CancelEggHatched, ResetFlags}
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
-// TODO: debug
-
 class EatEgg extends JavaPlugin {
   override def onEnable(): Unit = {
     implicit val instance: EatEgg = this

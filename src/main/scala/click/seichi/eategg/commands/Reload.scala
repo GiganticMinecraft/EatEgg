@@ -8,7 +8,6 @@ case class Reload()(implicit plugin: JavaPlugin) extends Executor {
   override val commandName: String = "reload"
 
   override def execute(context: CommandContext): Unit = {
-    // TODO: コンソールはどうなるのか？
     if (!context.sender.hasPermission(s"eategg.$commandName")) {
       context.sender.sendMessage(s"${ChatColor.RED}このコマンドを実行する権限がありません。")
       return
