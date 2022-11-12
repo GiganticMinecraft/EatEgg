@@ -1,6 +1,6 @@
 package click.seichi.eategg.commands
 
-import click.seichi.eategg.{EnabledWorlds, IsUuidIgnored}
+import click.seichi.eategg.IsUuidIgnored
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
