@@ -1,3 +1,12 @@
+## [0.1.2](https://github.com/Lucky3028/EatEgg/compare/v0.1.1...v0.1.2) (2022-11-13)
+
+
+### Bug Fixes
+
+* reload config from console ([4a2e3a2](https://github.com/Lucky3028/EatEgg/commit/4a2e3a2e9628dc4fec978a5d21e4a9cdb6e4501f)), closes [#4](https://github.com/Lucky3028/EatEgg/issues/4)
+
+
+
 ## [0.1.1](https://github.com/Lucky3028/EatEgg/compare/v0.1.0...v0.1.1) (2022-11-12)
 
 
