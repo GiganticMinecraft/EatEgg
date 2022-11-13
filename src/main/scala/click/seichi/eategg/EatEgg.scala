@@ -1,6 +1,7 @@
 package click.seichi.eategg
 
 import click.seichi.eategg.commands.MainCommand
+import click.seichi.eategg.config.EnabledWorlds
 import click.seichi.eategg.listeners.{CancelEggHatched, ResetFlags}
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin

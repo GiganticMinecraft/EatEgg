@@ -1,9 +1,10 @@
-package click.seichi.eategg
+package click.seichi.eategg.config
 
 import org.bukkit.plugin.java.JavaPlugin
-import scala.jdk.CollectionConverters._
-import scala.collection.mutable
+
 import java.util.Collections
+import scala.collection.mutable
+import scala.jdk.CollectionConverters._
 
 object EnabledWorlds {
   private final val ConfigPath = "enabled-worlds"

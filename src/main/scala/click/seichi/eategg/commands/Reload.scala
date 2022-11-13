@@ -1,6 +1,6 @@
 package click.seichi.eategg.commands
 
-import click.seichi.eategg.EnabledWorlds
+import click.seichi.eategg.config.EnabledWorlds
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin

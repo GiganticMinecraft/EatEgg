@@ -1,6 +1,7 @@
 package click.seichi.eategg.listeners
 
-import click.seichi.eategg.{EnabledWorlds, IsUuidIgnored}
+import click.seichi.eategg.IsUuidIgnored
+import click.seichi.eategg.config.EnabledWorlds
 import click.seichi.eategg.externals.WorldGuardInstance
 import org.bukkit.Material
 import org.bukkit.event.player.{PlayerEggThrowEvent, PlayerInteractEvent}
