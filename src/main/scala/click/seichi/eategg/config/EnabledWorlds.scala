@@ -13,11 +13,7 @@ object EnabledWorlds {
   def load()(implicit instance: JavaPlugin): Unit = {
     worlds.clear()
 
-    Option(instance.getConfig.getStringList(ConfigPath))
-      .getOrElse(Collections.emptyList())
-      .asScala
-      .map(_.toLowerCase)
-      .foreach(worlds.add)
+    instance.getConfig.getStringList(ConfigPath).asScala.map(_.toLowerCase).foreach(worlds.add)
   }
 
   def get(): Set[String] = worlds.toSet
