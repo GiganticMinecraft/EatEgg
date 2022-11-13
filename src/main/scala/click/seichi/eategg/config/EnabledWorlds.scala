@@ -2,7 +2,6 @@ package click.seichi.eategg.config
 
 import org.bukkit.plugin.java.JavaPlugin
 
-import java.util.Collections
 import scala.collection.mutable
 import scala.jdk.CollectionConverters._
 
