@@ -27,6 +27,8 @@ jobs:
       jar-output-dir: scala-2.13
   test-ci-and-cd:
     uses: Lucky3028/shared-workflows/.github/workflows/scala-ci-and-cd.yml@main
+    needs:
+      - ci-and-cd
     with:
       cache-build-deps-ver: v-1
       cache-build-outputs-ver: v-1
