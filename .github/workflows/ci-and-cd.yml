@@ -26,6 +26,7 @@ jobs:
       cache-build-outputs-ver: v-1
   cd:
     uses: Lucky3028/shared-workflows/.github/workflows/scala-cd.yml@main
+    if: github.ref == 'refs/heads/main'
     needs:
       - ci
     with:
