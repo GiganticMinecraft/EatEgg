@@ -19,8 +19,16 @@ on:
       - project/*
       - .github/**
 jobs:
-  ci-and-cd:
-    uses: Lucky3028/shared-workflows/.github/workflows/scala-ci-and-cd.yml@main
+  ci:
+    uses: Lucky3028/shared-workflows/.github/workflows/scala-ci.yml@main
+    with:
+      cache-build-deps-ver: v-1
+      cache-build-outputs-ver: v-1
+  cd:
+    uses: Lucky3028/shared-workflows/.github/workflows/scala-cd.yml@main
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - ci
     with:
       cache-build-deps-ver: v-1
       cache-build-outputs-ver: v-1
