@@ -19,61 +19,9 @@ on:
       - project/*
       - .github/**
 jobs:
-  ci:
-    name: Build, Lint and Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup Java and Cache deps
-        uses: ./.github/actions/setup-build
-
-      - name: Check format with Scalafmt
-        run: sbt scalafmtCheckAll
-      - name: Check lint with Scalafix
-        run: sbt "scalafix --check"
-      - name: Build artifact with Test
-        run: sbt assembly
-
-      - name: Clean build artifact for caching target folder
-        run: rm -r target/scala-2.13/*.jar
-  cd:
-    name: Release
-    runs-on: ubuntu-latest
-    needs: ci
-    if: github.ref == 'refs/heads/main'
-    # softprops/action-gh-release requires this permisson
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup Java and Cache deps
-        uses: ./.github/actions/setup-build
-
-      - name: Conventional Changelog Action
-        uses: TriPSs/conventional-changelog-action@v3.17.1
-        id: changelog
-        with:
-          github-token: ${{ secrets.github_token }}
-          git-user-name: "github-actions[bot]"
-          git-user-email: "github-actions[bot]@users.noreply.github.com"
-          skip-version-file: 'true'
-          skip-git-pull: 'true'
-      # CI時からバージョンが更新されているので、ここでBuild
-      - name: Build artifact
-        run: sbt assembly
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        with:
-          body: ${{ steps.changelog.outputs.clean_changelog }}
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          files: ./target/scala-2.13/EatEgg-*.jar
-
-      - name: Clean build artifact for caching target folder
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        run: rm -r target/scala-2.13/*.jar
+  ci-and-cd:
+    uses: Lucky3028/shared-workflows/.github/workflows/scala-ci-and-cd.yml@af65de2
+    with:
+      cache-build-deps-ver: v-1
+      cache-build-outputs-ver: v-1
+      jar-output-dir: scala-2.13
