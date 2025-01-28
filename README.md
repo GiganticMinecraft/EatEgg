@@ -21,4 +21,4 @@ enabled-worlds:
 
 ## License
 
-[MIT License](./LICENSE)
+[GPLv3 License](./LICENSE)
