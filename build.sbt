@@ -4,22 +4,19 @@ import sbt.Keys.baseDirectory
 // region Dependencies
 
 resolvers ++= Seq(
-  "maven.elmakers.com" at "https://maven.elmakers.com/repository/", // spigot
-  "Sonatype OSS" at "https://s01.oss.sonatype.org/content/groups/public/",
+  "PaperMC" at "https://repo.papermc.io/repository/maven-public/",
   "EngineHub" at "https://maven.enginehub.org/repo/"
 )
 
 libraryDependencies ++= Seq(
-  "org.spigotmc" % "spigot-api" % "1.12.2-R0.1-SNAPSHOT",
-  "com.sk89q.worldguard" % "worldguard-legacy" % "6.2",
-  // WorldGuardがWordEditを要求するので
-  "com.sk89q.worldedit" % "worldedit-bukkit" % "6.1"
+  "io.papermc.paper" % "paper-api" % "1.18.2-R0.1-SNAPSHOT",
+  "com.sk89q.worldguard" % "worldguard-bukkit" % "7.0.7",
+  // WorldGuard requires WorldEdit
+  "com.sk89q.worldedit" % "worldedit-bukkit" % "7.0.0"
 ).map(_ % "provided")
 
 excludeDependencies ++= Seq(
-  ExclusionRule(organization = "org.bukkit", name = "bukkit"),
-  ExclusionRule(organization = "org.bukkit", name = "craftbukkit"),
-  ExclusionRule(organization = "com.pneumaticraft.commandhandler", name = "CommandHandler")
+  ExclusionRule(organization = "org.bstats", name = "bstats-bukkit")
 )
 
 // endregion
