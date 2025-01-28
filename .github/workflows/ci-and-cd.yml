@@ -24,6 +24,7 @@ jobs:
     with:
       cache-build-deps-ver: v-1
       cache-build-outputs-ver: v-1
+      jar-output-dir: scala-2.13
   cd:
     uses: Lucky3028/shared-workflows/.github/workflows/scala-cd.yml@main
     if: github.ref == 'refs/heads/main'
@@ -32,4 +33,3 @@ jobs:
     with:
       cache-build-deps-ver: v-1
       cache-build-outputs-ver: v-1
-      jar-output-dir: scala-2.13
