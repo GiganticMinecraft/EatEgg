@@ -30,6 +30,3 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs:
       - ci
-    with:
-      cache-build-deps-ver: v-1
-      cache-build-outputs-ver: v-1
