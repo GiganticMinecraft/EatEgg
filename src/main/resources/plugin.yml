@@ -3,6 +3,7 @@ version: @version@
 main: click.seichi.eategg.EatEgg
 depend:
   - WorldGuard
+api-version: 1.18
 commands:
   eategg:
     usage: /eategg <toggle|reload>
