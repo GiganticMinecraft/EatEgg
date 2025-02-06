@@ -4,7 +4,7 @@ import org.bukkit.command.{CommandSender, TabExecutor}
 import org.bukkit.plugin.java.JavaPlugin
 
 import java.util
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 package object commands {
   case class CommandContext(

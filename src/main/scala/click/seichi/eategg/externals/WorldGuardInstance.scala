@@ -9,7 +9,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 object WorldGuardInstance {
   private val instance = {

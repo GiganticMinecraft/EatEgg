@@ -60,7 +60,7 @@ unmanagedResources / excludeFilter :=
 
 lazy val root = (project in file(".")).settings(
   name := "EatEgg",
-  scalaVersion := "2.13.16",
+  scalaVersion := "3.5.2",
   assembly / assemblyJarName := s"${name.value}-${version.value}.jar",
   assembly / test := (Test / test).value, // assmeblyの中でtestをする
   // scalafixがsemanticdbを必要とする
@@ -72,10 +72,7 @@ lazy val root = (project in file(".")).settings(
     "-unchecked",
     "-language:higherKinds",
     "-deprecation",
-    "-Ypatmat-exhaust-depth",
-    "320",
-    "-Ymacro-annotations",
-    "-Ywarn-unused"
+    "-Wunused:all"
   ),
   javacOptions ++= Seq("-encoding", "utf8"),
   // build.sbtそのほかビルドの設定が変わったときにsbtを自動リロードさせる
