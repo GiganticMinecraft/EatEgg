@@ -72,6 +72,7 @@ lazy val root = (project in file(".")).settings(
     "-unchecked",
     "-language:higherKinds",
     "-deprecation",
+    "-Wunused:all"
   ),
   javacOptions ++= Seq("-encoding", "utf8"),
   // build.sbtそのほかビルドの設定が変わったときにsbtを自動リロードさせる
