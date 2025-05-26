@@ -8,7 +8,7 @@
 | Command          | Description                 | Permission      | Default Permission |
 |------------------|-----------------------------|-----------------|--------------------|
 | `/eategg reload` | 設定を再読込します。                  | `eategg.reload` | op                 |
-| `/eategg toggle` | 卵やスポーンエッグを投げられるかどうかを切り替えます。 | `eategg.toggle` | op                 |
+| `/eategg toggle` | 自分が本プラグインによる機能制限を受けるかどうかを切り替えます。 | `eategg.toggle` | op                 |
 
 ## Config(config.yml)
 
