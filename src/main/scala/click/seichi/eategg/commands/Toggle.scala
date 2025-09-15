@@ -10,7 +10,7 @@ case class Toggle() extends Executor {
   override def execute(context: CommandContext): Unit = {
     val player = context.sender match {
       case p: Player => p
-      case _ =>
+      case _         =>
         context.sender.sendMessage(s"${ChatColor.RED}このコマンドはゲーム内からのみ実行できます。")
         return
     }
