@@ -9,7 +9,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "io.papermc.paper" % "paper-api" % "1.18.2-R0.1-SNAPSHOT",
+  "io.papermc.paper" % "paper-api" % "26.1.2.build.53-stable",
   "com.sk89q.worldguard" % "worldguard-bukkit" % "7.0.16",
   // WorldGuard requires WorldEdit
   "com.sk89q.worldedit" % "worldedit-bukkit" % "7.4.2"
