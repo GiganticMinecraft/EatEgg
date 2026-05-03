@@ -1,3 +1,4 @@
 {
-  "extends": ["github>Lucky3028/renovate"]
+  "extends": ["github>GiganticMinecraft/renovate"],
+  "ignoreDeps": ["io.papermc.paper:paper-api"]
 }
