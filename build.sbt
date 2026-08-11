@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   "io.papermc.paper" % "paper-api" % "1.18.2-R0.1-SNAPSHOT",
   "com.sk89q.worldguard" % "worldguard-bukkit" % "7.0.17",
   // WorldGuard requires WorldEdit
-  "com.sk89q.worldedit" % "worldedit-bukkit" % "7.4.3"
+  "com.sk89q.worldedit" % "worldedit-bukkit" % "7.4.5"
 ).map(_ % "provided")
 
 excludeDependencies ++= Seq(
