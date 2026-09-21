@@ -8,6 +8,12 @@
       "enabled": false
     },
     {
+      "description": "Checkstyleの更新を無視する: Java 17互換のバージョンを使用するため",
+      "matchManagers": ["gradle"],
+      "matchPackageNames": ["checkstyle", "com.puppycrawl.tools:checkstyle"],
+      "enabled": false
+    },
+    {
       "description": "WorldGuardの更新を無視する: Java 17互換のバージョンを使用するため",
       "matchManagers": ["gradle"],
       "matchPackageNames": ["com.sk89q.worldguard:worldguard-bukkit"],
