@@ -4,15 +4,22 @@ import click.seichi.eategg.IsUuidIgnored;
 import click.seichi.eategg.config.EnabledWorlds;
 import click.seichi.eategg.externals.WorldGuardInstance;
 import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiPredicate;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.jetbrains.annotations.NotNull;
 
 public final class CancelEggHatched implements Listener {
-  private static final Set<Material> SPAWN_EGGS =
+  private static final @NotNull Set<Material> SPAWN_EGGS =
       EnumSet.of(
           Material.ACACIA_BOAT,
           Material.AXOLOTL_SPAWN_EGG,
@@ -85,8 +92,21 @@ public final class CancelEggHatched implements Listener {
           Material.ZOMBIE_VILLAGER_SPAWN_EGG,
           Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
 
+  private final BiPredicate<Location, Player> isRegionOwner;
+
+  public CancelEggHatched() {
+    this(
+        (location, player) ->
+            WorldGuardInstance.getRegionsByLocation(location).stream()
+                .anyMatch(region -> region.isOwner(WorldGuardInstance.wrapPlayer(player))));
+  }
+
+  CancelEggHatched(BiPredicate<Location, Player> isRegionOwner) {
+    this.isRegionOwner = Objects.requireNonNull(isRegionOwner);
+  }
+
   @EventHandler
-  public void onEggThrown(PlayerEggThrowEvent event) {
+  public void onEggThrown(@NotNull PlayerEggThrowEvent event) {
     var egg = event.getEgg();
     var player = event.getPlayer();
 
@@ -96,8 +116,7 @@ public final class CancelEggHatched implements Listener {
     if (IsUuidIgnored.get(player.getUniqueId())) {
       return;
     }
-    if (WorldGuardInstance.getRegionsByLocation(egg.getLocation()).stream()
-        .anyMatch(region -> region.isOwner(WorldGuardInstance.wrapPlayer(player)))) {
+    if (isRegionOwner.test(egg.getLocation(), player)) {
       return;
     }
 
@@ -105,7 +124,7 @@ public final class CancelEggHatched implements Listener {
   }
 
   @EventHandler
-  public void onSpawnEggThrown(PlayerInteractEvent event) {
+  public void onSpawnEggThrown(@NotNull PlayerInteractEvent event) {
     var player = event.getPlayer();
 
     if (!EnabledWorlds.contains(player.getWorld().getName())) {
@@ -117,11 +136,9 @@ public final class CancelEggHatched implements Listener {
     if (!SPAWN_EGGS.contains(player.getInventory().getItemInMainHand().getType())) {
       return;
     }
-    if (WorldGuardInstance.getRegionsByLocation(event.getClickedBlock().getLocation()).stream()
-        .anyMatch(region -> region.isOwner(WorldGuardInstance.wrapPlayer(player)))) {
-      return;
-    }
-
-    event.setCancelled(true);
+    Optional.ofNullable(event.getClickedBlock())
+        .map(Block::getLocation)
+        .filter(location -> !isRegionOwner.test(location, player))
+        .ifPresent(_location -> event.setCancelled(true));
   }
 }
