@@ -8,6 +8,12 @@
       "enabled": false
     },
     {
+      "description": "WorldGuardの更新を無視する: 実際に使用されているバージョンと一致させるため",
+      "matchManagers": ["sbt"],
+      "matchPackageNames": ["com.sk89q.worldguard:worldguard-bukkit"],
+      "enabled": false
+    },
+    {
       "description": "Paper APIの更新を無視する: Minecraft 1.18.2向けのプロジェクトのため",
       "matchManagers": ["sbt"],
       "matchPackageNames": ["io.papermc.paper:paper-api"],
