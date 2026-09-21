@@ -2,8 +2,7 @@
 .idea
 *.iml
 
-# SBT
-/project/target
-/project/project/target
-/target
-.bsp/
+# Gradle
+.gradle/
+/build/
+target/

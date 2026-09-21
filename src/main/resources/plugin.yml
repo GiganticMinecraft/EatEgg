@@ -1,14 +1,14 @@
-name: @name@
-version: @version@
+name: EatEgg
+version: ${version}
 main: click.seichi.eategg.EatEgg
 depend:
   - WorldGuard
-api-version: 1.18
+api-version: '1.18'
 commands:
   eategg:
     usage: /eategg <toggle|reload>
     description: This is a command to execute something about EatEgg.
-perimissions:
+permissions:
   eategg.*:
     default: op
     children:

@@ -1,0 +1,80 @@
+name: Lint GitHub Actions
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/**/*.yaml"
+      - "mise.toml"
+  pull_request:
+    paths:
+      - ".github/**/*.yaml"
+      - "mise.toml"
+permissions: {}
+jobs:
+  ghasec:
+    name: Security scan
+    timeout-minutes: 3
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up mise
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          version: '2026.9.11'
+          cache: true
+      - name: Lint GitHub Actions
+        id: ghasec
+        continue-on-error: true
+        env:
+          GHASEC_DISABLE_OFFLINE_WARNING: 'true'
+          GHASEC_DISABLE_UPDATE_CHECK: 'true'
+        run: |
+          set -o pipefail
+          mise run --raw lint-gha 2>&1 | tee /tmp/ghasec.log
+      - name: Generate report
+        if: github.event_name == 'pull_request'
+        env:
+          GHASEC_OUTCOME: ${{ steps.ghasec.outcome }}
+        run: |
+          {
+            echo '<!-- ghasec -->'
+            if [[ "$GHASEC_OUTCOME" == "success" ]]; then
+              echo '## :white_check_mark: GitHub Actions lint — passed'
+            else
+              echo '## :warning: GitHub Actions lint — failed'
+              echo
+              echo '<details>'
+              echo '<summary>CI logs</summary>'
+              echo
+              echo '```text'
+              cat /tmp/ghasec.log
+              echo '```'
+              echo '</details>'
+            fi
+          } | tee /tmp/ghasec-result.md
+      - name: Find existing PR comment
+        if: github.event_name == 'pull_request'
+        id: find-comment
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: github-actions[bot]
+          body-includes: '<!-- ghasec -->'
+      - name: Create or update PR comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
+        with:
+          token: ${{ github.token }}
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: /tmp/ghasec-result.md
+          edit-mode: replace
+      - name: Fail on issues
+        if: always() && steps.ghasec.outcome == 'failure'
+        run: exit 1
