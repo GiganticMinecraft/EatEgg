@@ -1,0 +1,33 @@
+name: Lint YAML
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.yaml"
+      - ".github/.yamllint.yaml"
+      - "mise.toml"
+  pull_request:
+    paths:
+      - "**/*.yaml"
+      - ".github/.yamllint.yaml"
+      - "mise.toml"
+permissions: {}
+jobs:
+  lint:
+    name: Lint YAML
+    timeout-minutes: 3
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up mise
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        with:
+          version: '2026.9.11'
+          cache: true
+      - name: Lint YAML
+        run: mise run --raw lint-yaml

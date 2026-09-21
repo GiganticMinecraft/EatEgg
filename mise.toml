@@ -1,0 +1,33 @@
+[tools]
+java = "temurin-17"
+node = "24"
+"pypi:yamllint" = "1.37.1"
+"npm:markdownlint-cli2" = "0.23.2"
+"npm:renovate" = "44.103.6"
+"github:koki-develop/ghasec" = "0.17.0"
+
+[tasks.build]
+description = "Build the plugin"
+run = "./gradlew build --no-daemon"
+run_windows = "gradlew.bat build --no-daemon"
+
+[tasks.test]
+description = "Run tests"
+run = "./gradlew test"
+run_windows = "gradlew.bat test"
+
+[tasks.lint-yaml]
+description = "Lint YAML files"
+run = "yamllint --format github --config-file .github/.yamllint.yaml .github src/main/resources"
+
+[tasks.lint-markdown]
+description = "Lint Markdown files"
+run = 'markdownlint-cli2 "**/*.md"'
+
+[tasks.lint-gha]
+description = "Scan GitHub Actions workflows"
+run = "ghasec"
+
+[tasks.validate-renovate]
+description = "Validate Renovate configuration"
+run = "renovate-config-validator --strict"
