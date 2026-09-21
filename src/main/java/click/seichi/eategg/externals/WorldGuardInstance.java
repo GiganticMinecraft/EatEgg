@@ -11,25 +11,26 @@ import java.util.Objects;
 import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public final class WorldGuardInstance {
-  private static final WorldGuard INSTANCE =
+  private static final @NotNull WorldGuard INSTANCE =
       Objects.requireNonNull(WorldGuard.getInstance(), "WorldGuard is not found.");
 
   private WorldGuardInstance() {}
 
-  public static Set<ProtectedRegion> getRegionsByLocation(Location location) {
+  public static @NotNull Set<ProtectedRegion> getRegionsByLocation(@NotNull Location location) {
     RegionManager regionManager =
         INSTANCE.getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld()));
 
     return Set.copyOf(
-        regionManager
+        Objects.requireNonNull(regionManager)
             .getApplicableRegions(
                 BlockVector3.at(location.getX(), location.getY(), location.getZ()))
             .getRegions());
   }
 
-  public static LocalPlayer wrapPlayer(Player player) {
+  public static @NotNull LocalPlayer wrapPlayer(@NotNull Player player) {
     return WorldGuardPlugin.inst().wrapPlayer(player);
   }
 }

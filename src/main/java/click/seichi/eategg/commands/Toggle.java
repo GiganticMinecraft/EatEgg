@@ -2,22 +2,19 @@ package click.seichi.eategg.commands;
 
 import click.seichi.eategg.IsUuidIgnored;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-public final class Toggle extends Executor {
-  public Toggle() {
-    super("toggle");
-  }
-
-  @Override
-  public void execute(CommandContext context) {
-    if (!(context.sender() instanceof Player player)) {
-      context.sender().sendMessage(ChatColor.RED + "このコマンドはゲーム内からのみ実行できます。");
+public final class Toggle {
+  public void execute(@NotNull CommandSender sender) {
+    if (!(sender instanceof Player player)) {
+      sender.sendMessage(ChatColor.RED + "このコマンドはゲーム内からのみ実行できます。");
       return;
     }
 
-    if (!player.hasPermission("eategg." + getCommandName())) {
-      context.sender().sendMessage(ChatColor.RED + "このコマンドを実行する権限がありません。");
+    if (!player.hasPermission("eategg.toggle")) {
+      sender.sendMessage(ChatColor.RED + "このコマンドを実行する権限がありません。");
       return;
     }
 
