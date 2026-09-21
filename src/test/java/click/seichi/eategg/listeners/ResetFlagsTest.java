@@ -6,6 +6,7 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import click.seichi.eategg.IsUuidIgnored;
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,9 @@ class ResetFlagsTest {
     PlayerMock player = server.addPlayer();
     IsUuidIgnored.toggle(player.getUniqueId());
 
-    new ResetFlags().onPlayerQuit(new PlayerQuitEvent(player, ""));
+    PlayerQuitEvent event =
+        new PlayerQuitEvent(player, Component.empty(), PlayerQuitEvent.QuitReason.DISCONNECTED);
+    new ResetFlags().onPlayerQuit(event);
 
     assertFalse(IsUuidIgnored.get(player.getUniqueId()));
   }
