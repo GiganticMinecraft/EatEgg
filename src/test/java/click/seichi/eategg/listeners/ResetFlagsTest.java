@@ -30,12 +30,9 @@ class ResetFlagsTest {
     PlayerMock player = server.addPlayer();
     IsUuidIgnored.toggle(player.getUniqueId());
 
-    new ResetFlags()
-        .onPlayerQuit(
-            new PlayerQuitEvent(
-                player, Component.empty(), PlayerQuitEvent.QuitReason.DISCONNECTED
-            )
-        );
+    PlayerQuitEvent event =
+        new PlayerQuitEvent(player, Component.empty(), PlayerQuitEvent.QuitReason.DISCONNECTED);
+    new ResetFlags().onPlayerQuit(event);
 
     assertFalse(IsUuidIgnored.get(player.getUniqueId()));
   }
