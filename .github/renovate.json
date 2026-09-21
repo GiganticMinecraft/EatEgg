@@ -1,0 +1,23 @@
+{
+  "extends": ["github>Lucky3028/renovate"],
+  "packageRules": [
+    {
+      "description": "WorldGuardの更新を無視する: Java 17互換のバージョンを使用するため",
+      "matchManagers": ["gradle"],
+      "matchPackageNames": ["com.sk89q.worldguard:worldguard-bukkit"],
+      "enabled": false
+    },
+    {
+      "description": "WorldEditの更新を無視する: 実際に使用されているバージョンと一致させるため",
+      "matchManagers": ["gradle"],
+      "matchPackageNames": ["com.sk89q.worldedit:worldedit-bukkit"],
+      "enabled": false
+    },
+    {
+      "description": "Paper APIの更新を無視する: Minecraft 1.18.2向けのプロジェクトのため",
+      "matchManagers": ["gradle"],
+      "matchPackageNames": ["io.papermc.paper:paper-api"],
+      "enabled": false
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'com.diffplug.spotless' version '8.10.2'
+}
+
+group = 'click.seichi'
+def releaseVersion = providers.gradleProperty('releaseVersion')
+if (releaseVersion.isPresent()) {
+    version = releaseVersion.get()
+}
+
+repositories {
+    maven { url = uri('https://repo.papermc.io/repository/maven-public/') }
+    maven { url = uri('https://maven.enginehub.org/repo/') }
+    mavenCentral()
+}
+
+checkstyle {
+    toolVersion = '12.3.1'
+    configFile = file('.github/checkstyle.xml')
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.28.0')
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('spotlessCheck')
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT'
+    compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.7'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.7'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:6.1.3'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:2.85.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.1.3'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    maxParallelForks = 1
+}
+
+processResources {
+    def pluginVersion = project.version.toString().replaceFirst('^v', '')
+    def resourceProperties = [version: pluginVersion]
+    inputs.properties(resourceProperties)
+
+    filesMatching('plugin.yml') {
+        expand(resourceProperties)
+    }
+}
