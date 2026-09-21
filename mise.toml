@@ -27,6 +27,7 @@ run = "yamllint --format github --config-file .github/.yamllint.yaml .github src
 [tasks.lint-markdown]
 description = "Lint Markdown files"
 run = 'markdownlint-cli2 "**/*.md"'
+run_windows = 'markdownlint-cli2 "**/*.md"'
 
 [tasks.lint-gha]
 description = "Scan GitHub Actions workflows"
