@@ -36,3 +36,69 @@ run = "ghasec"
 [tasks.validate-renovate]
 description = "Validate Renovate configuration"
 run = "renovate-config-validator --strict"
+
+[tasks.add-tag]
+description = "Create a signed release tag"
+usage = '''
+arg "<version>" help="Release version such as 1.0.0"
+'''
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+  echo "add-tag requires a Git-colocated checkout with a configured signing key" >&2
+  exit 1
+fi
+
+version="${usage_version?}"
+if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "version must have the form MAJOR.MINOR.PATCH: $version" >&2
+  exit 1
+fi
+
+tag="v${version}"
+if git show-ref --verify --quiet "refs/tags/${tag}"; then
+  echo "tag already exists: ${tag}" >&2
+  exit 1
+fi
+
+git tag -s "$tag" -m "Release $tag"
+'''
+
+[tasks.push-tag]
+description = "Push an existing signed release tag"
+usage = '''
+arg "<version>" help="Release version such as 1.0.0"
+'''
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! git rev-parse --git-dir >/dev/null 2>&1; then
+  echo "push-tag requires a Git-colocated checkout with an origin remote" >&2
+  exit 1
+fi
+
+version="${usage_version?}"
+if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "version must have the form MAJOR.MINOR.PATCH: $version" >&2
+  exit 1
+fi
+
+tag="v${version}"
+if ! git show-ref --verify --quiet "refs/tags/${tag}"; then
+  echo "tag does not exist: ${tag}" >&2
+  exit 1
+fi
+if [[ "$(git cat-file -t "refs/tags/${tag}")" != "tag" ]]; then
+  echo "tag is not annotated: ${tag}" >&2
+  exit 1
+fi
+if ! git remote get-url origin >/dev/null 2>&1; then
+  echo "origin remote is not configured" >&2
+  exit 1
+fi
+
+git push origin "$tag"
+'''
