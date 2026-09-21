@@ -1,5 +1,6 @@
 {
-  "extends": ["github>Lucky3028/renovate"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>GiganticMinecraft/renovate-config"],
   "packageRules": [
     {
       "description": "Javaの更新を無視する: Minecraft 1.18.2向けのプロジェクトのため",
