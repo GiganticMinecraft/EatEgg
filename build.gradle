@@ -5,30 +5,18 @@ plugins {
 }
 
 group = 'click.seichi'
-def releaseVersion = providers.gradleProperty('releaseVersion')
-if (releaseVersion.isPresent()) {
-    version = releaseVersion.get()
-}
+version = providers.gradleProperty('releaseVersion').orElse('0.0.0-SNAPSHOT').get()
 
 repositories {
-    maven { url = uri('https://repo.papermc.io/repository/maven-public/') }
-    maven { url = uri('https://maven.enginehub.org/repo/') }
     mavenCentral()
-}
-
-checkstyle {
-    toolVersion = '12.3.1'
-    configFile = file('.github/checkstyle.xml')
-}
-
-spotless {
-    java {
-        googleJavaFormat('1.28.0')
+    maven {
+        name = 'papermc'
+        url = uri('https://repo.papermc.io/repository/maven-public/')
     }
-}
-
-tasks.named('check') {
-    dependsOn tasks.named('spotlessCheck')
+    maven {
+        name = 'WorldGuard/WorldEdit'
+        url = uri('https://maven.enginehub.org/repo/')
+    }
 }
 
 dependencies {
@@ -50,6 +38,21 @@ java {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 17
+}
+
+checkstyle {
+    toolVersion = '12.3.1'
+    configFile = file('.github/checkstyle.xml')
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.28.0')
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('spotlessCheck')
 }
 
 tasks.named('test', Test) {
